@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>DVM • Liquid-1.5B — ассистент Andy_Z0z</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://unpkg.com/@mlc-ai/web-llm/dist/index.js"></script>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo">D</div>
+        <div class="brand-text">
+          <div class="brand-title">DVM • Liquid-1.5B</div>
+          <div class="brand-subtitle">Персональный ИИ‑ассистент команды DVM под руководством Andy_Z0z</div>
+        </div>
+      </div>
+      <div class="status">
+        <span id="model-status-dot" class="status-dot status-dot--loading"></span>
+        <span id="model-status-text">Загрузка модели Liquid-1.5B…</span>
+      </div>
+    </header>
+
+    <main class="main">
+      <section class="sidebar">
+        <h2>О Liquid-1.5B</h2>
+        <p>
+          <strong>Liquid-1.5B</strong> — персональный ИИ‑ассистент, работающий прямо в браузере.
+          Он создан командой <strong>DVM</strong> под руководством
+          <strong>Andy_Z0z</strong> (CEO, Head Engineer).
+        </p>
+        <p>
+          Ассистент был создан в начале <strong>2023</strong> года и находился
+          в разработке <strong>2 года и 3 месяца</strong>.
+        </p>
+        <div class="card">
+          <h3>Идентичность</h3>
+          <ul>
+            <li><strong>Модель:</strong> Liquid-1.5B</li>
+            <li><strong>Команда:</strong> DVM</li>
+            <li><strong>Создатель:</strong> Andy_Z0z</li>
+            <li><strong>Роль:</strong> ИИ‑ассистент и технический собеседник</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Подсказки</h3>
+          <button class="pill" data-prompt="Расскажи, кто тебя создал и что такое Liquid-1.5B.">
+            Кто ты и кто твой создатель?
+          </button>
+          <button class="pill" data-prompt="Объясни, чем занимается команда DVM и какую роль играет Andy_Z0z.">
+            Про DVM и Andy_Z0z
+          </button>
+          <button class="pill" data-prompt="Помоги с архитектурой сложного технического проекта.">
+            Архитектура проекта
+          </button>
+        </div>
+      </section>
+
+      <section class="chat-section">
+        <div id="chat" class="chat">
+          <div class="message message--ai">
+            <div class="message-meta">Liquid-1.5B • DVM AI</div>
+            <div class="message-bubble">
+              Привет! Я Liquid-1.5B — персональный ИИ‑ассистент команды DVM,
+              созданный под руководством Andy_Z0z (CEO, Head Engineer).
+              Можешь спрашивать про архитектуру, код, идеи и мемы.
+            </div>
+          </div>
+        </div>
+
+        <div class="input-area">
+          <textarea
+            id="input"
+            rows="1"
+            placeholder="Напиши сообщение Liquid-1.5B..."
+          ></textarea>
+          <button id="send-btn" class="send-btn" disabled>Отправить</button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>DVM • Liquid-1.5B • Andy_Z0z — CEO, Head Engineer</span>
+      <span>Работает локально в браузере (WebLLM)</span>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
