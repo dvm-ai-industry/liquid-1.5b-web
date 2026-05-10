@@ -60,7 +60,7 @@ async function init() {
   try {
     setStatus("loading", "Загрузка модели Liquid-1.5B…");
     engine = await webllm.createMLCEngine(
-      "Llama-3-8B-Instruct-q4f32_1-MLC",
+       "Phi-3-mini-4k-instruct-q4f16_1-MLC",
       {
         gpuMemoryUtilization: 0.8
       }
