@@ -26,6 +26,24 @@ const statusDot = document.getElementById("status-dot");
 const statusText = document.getElementById("status-text");
 const newChatBtn = document.getElementById("new-chat");
 
+const loader = document.getElementById("model-loader");
+const loaderFill = document.getElementById("loader-fill");
+const loaderStatus = document.getElementById("loader-status");
+
+function showLoader() {
+  loader.classList.remove("hidden");
+  updateLoader(0, "Инициализация…");
+}
+
+function hideLoader() {
+  loader.classList.add("hidden");
+}
+
+function updateLoader(percent, text) {
+  loaderFill.style.width = percent + "%";
+  loaderStatus.textContent = text;
+}
+
 let engine = null;
 let isBusy = false;
 let messages = [{ role: "system", content: SYSTEM_PROMPT }];
