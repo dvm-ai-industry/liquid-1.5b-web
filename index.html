@@ -1,92 +1,73 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>DVM • Liquid-1.5B — ассистент Andy_Z0z</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Liquid Web</title>
   <link rel="stylesheet" href="style.css" />
-  <script src="https://unpkg.com/@mlc-ai/web-llm/dist/web-llm.min.js"></script>
 </head>
 <body>
-  <div class="app">
-    <header class="topbar">
-      <div class="brand">
-        <div class="logo">D</div>
-        <div class="brand-text">
-          <div class="brand-title">DVM • Liquid-1.5B</div>
-          <div class="brand-subtitle">Персональный ИИ‑ассистент команды DVM под руководством Andy_Z0z</div>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo-circle">AI</div>
+        <div class="sidebar-title">
+          <span class="brand">Liquid</span>
+          <span class="subtitle">powered by Liquid-1.5b</span>
         </div>
       </div>
-      <div class="status">
-        <span id="model-status-dot" class="status-dot status-dot--loading"></span>
-        <span id="model-status-text">Загрузка модели Liquid-1.5B…</span>
+      <div class="sidebar-section">
+        <div class="section-label">Session</div>
+        <button class="pill-btn" id="new-chat">New chat</button>
       </div>
-    </header>
+      <div class="sidebar-footer">
+        <span class="footer-text">Experimental · Local WebGPU</span>
+      </div>
+    </aside>
 
     <main class="main">
-      <section class="sidebar">
-        <h2>О Liquid-1.5B</h2>
-        <p>
-          <strong>Liquid-1.5B</strong> — персональный ИИ‑ассистент, работающий прямо в браузере.
-          Он создан командой <strong>DVM</strong> под руководством
-          <strong>Andy_Z0z</strong> (CEO, Head Engineer).
-        </p>
-        <p>
-          Ассистент был создан в начале <strong>2023</strong> года и находился
-          в разработке <strong>2 года и 3 месяца</strong>.
-        </p>
-        <div class="card">
-          <h3>Идентичность</h3>
-          <ul>
-            <li><strong>Модель:</strong> Liquid-1.5B</li>
-            <li><strong>Команда:</strong> DVM</li>
-            <li><strong>Создатель:</strong> Andy_Z0z</li>
-            <li><strong>Роль:</strong> ИИ‑ассистент и технический собеседник</li>
-          </ul>
+      <header class="topbar">
+        <div class="topbar-left">
+          <h1>Copilot</h1>
+          <span class="topbar-subtitle">Ask anything. Locally.</span>
         </div>
-        <div class="card">
-          <h3>Подсказки</h3>
-          <button class="pill" data-prompt="Расскажи, кто тебя создал и что такое Liquid-1.5B.">
-            Кто ты и кто твой создатель?
-          </button>
-          <button class="pill" data-prompt="Объясни, чем занимается команда DVM и какую роль играет Andy_Z0z.">
-            Про DVM и Andy_Z0z
-          </button>
-          <button class="pill" data-prompt="Помоги с архитектурой сложного технического проекта.">
-            Архитектура проекта
-          </button>
+        <div class="topbar-right">
+          <span class="status-dot" id="status-dot"></span>
+          <span id="status-text">Initializing model…</span>
         </div>
-      </section>
+      </header>
 
-      <section class="chat-section">
-        <div id="chat" class="chat">
-          <div class="message message--ai">
-            <div class="message-meta">Liquid-1.5B • DVM AI</div>
-            <div class="message-bubble">
-              Привет! Я Liquid-1.5B — персональный ИИ‑ассистент команды DVM,
-              созданный под руководством Andy_Z0z (CEO, Head Engineer).
-              Можешь спрашивать про архитектуру, код, идеи и мемы.
+      <section class="chat" id="chat">
+        <div class="message message-ai">
+          <div class="avatar avatar-ai">AI</div>
+          <div class="bubble">
+            <div class="bubble-header">Liquid</div>
+            <div class="bubble-body">
+              Привет, я твой локальный Liquid-1.5b. Пиши, что хочешь разобрать.
             </div>
           </div>
         </div>
+      </section>
 
-        <div class="input-area">
+      <footer class="composer">
+        <div class="composer-inner">
           <textarea
             id="input"
             rows="1"
-            placeholder="Напиши сообщение Liquid-1.5B..."
+            placeholder="Напиши запрос"
           ></textarea>
-          <button id="send-btn" class="send-btn" disabled>Отправить</button>
+          <button id="send" class="send-btn">
+            <span>Send</span>
+          </button>
         </div>
-      </section>
+        <div class="hint">
+          Модель: Liquid-1.5b · Работает в браузере через WebGPU
+        </div>
+      </footer>
     </main>
-
-    <footer class="footer">
-      <span>DVM • Liquid-1.5B • Andy_Z0z — CEO, Head Engineer</span>
-      <span>Работает локально в браузере (WebLLM)</span>
-    </footer>
   </div>
 
+  <!-- Локальный WebLLM -->
+  <script src="webllm/web-llm.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
