@@ -83,8 +83,37 @@ function setStatus(text, color) {
 
 async function initEngine() {
   try {
+    showLoader();
+    updateLoader(5, "Запуск WebGPU…");
     setStatus("Загрузка Liquid‑1.5B…", "#ffaa3b");
     sendBtn.disabled = true;
+
+    engine = await window.webllm.CreateMLCEngine(
+      "Liquid-1.5B",
+      {
+        gpuMemoryUtilization: 0.9,
+
+        initProgressCallback: (progress) => {
+          const pct = Math.floor(progress.progress * 100);
+          updateLoader(pct, progress.text);
+
+          if (pct >= 100) {
+            updateLoader(100, "Готово!");
+            setTimeout(hideLoader, 600);
+          }
+        }
+      }
+    );
+
+    setStatus("Готов", "#3ddc97");
+    sendBtn.disabled = false;
+
+  } catch (e) {
+    console.error(e);
+    setStatus("Ошибка загрузки", "#ff4f6b");
+    updateLoader(100, "Ошибка загрузки");
+  }
+}
 
     engine = await window.webllm.CreateMLCEngine(
       "Llama-3-8B-Instruct-q4f16_1-MLC",
