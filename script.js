@@ -108,7 +108,8 @@ async function initEngine() {
     setStatus("Готов", "#3ddc97");
     sendBtn.disabled = false;
 
-  } catch (e) {
+  }
+  catch (e) {
     console.error(e);
     setStatus("Ошибка загрузки", "#ff4f6b");
     updateLoader(100, "Ошибка загрузки");
