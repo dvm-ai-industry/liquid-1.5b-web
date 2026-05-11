@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Liquid Web</title>
+  <title>Liquid‑1.5B · DVM Copilot</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -11,28 +11,30 @@
       <div class="sidebar-header">
         <div class="logo-circle">AI</div>
         <div class="sidebar-title">
-          <span class="brand">Liquid</span>
-          <span class="subtitle">powered by Liquid-1.5b</span>
+          <span class="brand">Liquid‑1.5B</span>
+          <span class="subtitle">DVM Copilot</span>
         </div>
       </div>
+
       <div class="sidebar-section">
         <div class="section-label">Session</div>
         <button class="pill-btn" id="new-chat">New chat</button>
       </div>
+
       <div class="sidebar-footer">
-        <span class="footer-text">Experimental · Local WebGPU</span>
+        <span class="footer-text">Local WebGPU · DVM</span>
       </div>
     </aside>
 
     <main class="main">
       <header class="topbar">
         <div class="topbar-left">
-          <h1>Copilot</h1>
-          <span class="topbar-subtitle">Ask anything. Locally.</span>
+          <h1>Liquid‑1.5B</h1>
+          <span class="topbar-subtitle">Personal AI by DVM</span>
         </div>
         <div class="topbar-right">
           <span class="status-dot" id="status-dot"></span>
-          <span id="status-text">Initializing model…</span>
+          <span id="status-text">Initializing…</span>
         </div>
       </header>
 
@@ -40,9 +42,9 @@
         <div class="message message-ai">
           <div class="avatar avatar-ai">AI</div>
           <div class="bubble">
-            <div class="bubble-header">Liquid</div>
+            <div class="bubble-header">Liquid‑1.5B</div>
             <div class="bubble-body">
-              Привет, я твой локальный Liquid-1.5b. Пиши, что хочешь разобрать.
+              Привет, я Liquid‑1.5B — персональный ИИ‑ассистент DVM. Готов работать.
             </div>
           </div>
         </div>
@@ -50,27 +52,22 @@
 
       <footer class="composer">
         <div class="composer-inner">
-          <textarea
-            id="input"
-            rows="1"
-            placeholder="Напиши запрос"
-          ></textarea>
-          <button id="send" class="send-btn">
-            <span>Send</span>
-          </button>
+          <textarea id="input" rows="1" placeholder="Напиши запрос…"></textarea>
+          <button id="send" class="send-btn">Send</button>
         </div>
         <div class="hint">
-          Модель: Liquid-1.5b · Работает в браузере через WebGPU
+          Модель: Liquid‑1.5B (локальная) · WebGPU
         </div>
       </footer>
     </main>
   </div>
 
-  <!-- Локальный WebLLM -->
-<script type="module">
-  import * as webllm from "https://esm.run/@mlc-ai/web-llm";
-  window.webllm = webllm;
-</script>
+  <!-- ESM‑импорт WebLLM -->
+  <script type="module">
+    import * as webllm from "https://esm.run/@mlc-ai/web-llm";
+    window.webllm = webllm;
+  </script>
+
   <script src="script.js"></script>
 </body>
 </html>
