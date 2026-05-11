@@ -107,8 +107,7 @@ async function initEngine() {
 
     setStatus("Готов", "#3ddc97");
     sendBtn.disabled = false;
-
-  }
+    
   catch (e) {
     console.error(e);
     setStatus("Ошибка загрузки", "#ff4f6b");
