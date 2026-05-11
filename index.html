@@ -67,7 +67,10 @@
   </div>
 
   <!-- Локальный WebLLM -->
-  <script src="webllm/web-llm.min.js"></script>
+<script type="module">
+  import * as webllm from "https://esm.run/@mlc-ai/web-llm";
+  window.webllm = webllm;
+</script>
   <script src="script.js"></script>
 </body>
 </html>
