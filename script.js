@@ -28,9 +28,7 @@ const newChatBtn = document.getElementById("new-chat");
 
 let engine = null;
 let isBusy = false;
-let messages = [
-  { role: "system", content: SYSTEM_PROMPT },
-];
+let messages = [{ role: "system", content: SYSTEM_PROMPT }];
 
 function appendMessage(role, content) {
   const wrapper = document.createElement("div");
@@ -67,17 +65,14 @@ function setStatus(text, color) {
 
 async function initEngine() {
   try {
-    setStatus("Загрузка", "#ffaa3b");
+    setStatus("Загрузка Liquid‑1.5B…", "#ffaa3b");
     sendBtn.disabled = true;
 
-    engine = await webllm.createMLCEngine(
+    engine = await window.webllm.createMLCEngine(
       "Llama-3-8B-Instruct-q4f16_1-MLC",
       {
         gpuMemoryUtilization: 0.9,
-        // при желании можно зафиксировать источник:
-           modelConfig: {
-           model_url: "https://huggingface.co/mlc-ai/Llama-3-8B-Instruct-q4f16_1-MLC/resolve/main/"
-       }
+        modelConfig: { model_url: "https://huggingface.co/mlc-ai/Llama-3-8B-Instruct-q4f16_1-MLC/resolve/main/" }
       }
     );
 
@@ -85,7 +80,7 @@ async function initEngine() {
     sendBtn.disabled = false;
   } catch (e) {
     console.error(e);
-    setStatus("Ошибка загрузки модели", "#ff4f6b");
+    setStatus("Ошибка загрузки", "#ff4f6b");
   }
 }
 
@@ -115,7 +110,7 @@ async function handleSend() {
     setStatus("Готов", "#3ddc97");
   } catch (e) {
     console.error(e);
-    appendMessage("assistant", "Произошла ошибка при генерации ответа.");
+    appendMessage("assistant", "Ошибка генерации ответа.");
     setStatus("Ошибка", "#ff4f6b");
   } finally {
     isBusy = false;
@@ -134,10 +129,7 @@ inputEl.addEventListener("keydown", (e) => {
 newChatBtn.addEventListener("click", () => {
   messages = [{ role: "system", content: SYSTEM_PROMPT }];
   chatEl.innerHTML = "";
-  appendMessage(
-    "assistant",
-    "Новый диалог. Я — Liquid‑1.5B, ассистент DVM. Можешь задавать следующий вопрос."
-  );
+  appendMessage("assistant", "Новый диалог. Я — Liquid‑1.5B. Готов.");
 });
 
 initEngine();
