@@ -89,11 +89,11 @@ async function initEngine() {
     sendBtn.disabled = true;
 
     engine = await window.webllm.CreateMLCEngine(
-      "Llama-3-8B-Instruct-q4f16_1-MLC",
+      "Llama-3-1B-Instruct-q4f32_1-MLC",
       {
         gpuMemoryUtilization: 0.9,
         modelConfig: {
-          model_url: "https://huggingface.co/mlc-ai/Llama-3-8B-Instruct-q4f16_1-MLC/resolve/main/"
+          model_url: "https://huggingface.co/mlc-ai/Llama-3-1B-Instruct-q4f32_1-MLC/resolve/main/"
         },
         initProgressCallback: (progress) => {
           const pct = Math.floor(progress.progress * 100);
