@@ -68,7 +68,7 @@ async function initEngine() {
     setStatus("Загрузка Liquid‑1.5B…", "#ffaa3b");
     sendBtn.disabled = true;
 
-    engine = await window.webllm.createMLCEngine(
+    engine = await window.webllm.CreateMLCEngine(
       "Llama-3-8B-Instruct-q4f16_1-MLC",
       {
         gpuMemoryUtilization: 0.9,
