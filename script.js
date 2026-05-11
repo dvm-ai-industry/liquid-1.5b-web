@@ -92,11 +92,12 @@ async function initEngine() {
       "Llama-3-8B-Instruct-q4f16_1-MLC",
       {
         gpuMemoryUtilization: 0.9,
-
+        modelConfig: {
+          model_url: "https://huggingface.co/mlc-ai/Llama-3-8B-Instruct-q4f16_1-MLC/resolve/main/"
+        },
         initProgressCallback: (progress) => {
           const pct = Math.floor(progress.progress * 100);
           updateLoader(pct, progress.text);
-
           if (pct >= 100) {
             updateLoader(100, "Готово!");
             setTimeout(hideLoader, 600);
@@ -107,28 +108,10 @@ async function initEngine() {
 
     setStatus("Готов", "#3ddc97");
     sendBtn.disabled = false;
-    
-  catch (e) {
+  } catch (e) {
     console.error(e);
     setStatus("Ошибка загрузки", "#ff4f6b");
     updateLoader(100, "Ошибка загрузки");
-  }
-}
-
-    engine = await window.webllm.CreateMLCEngine(
-      "Llama-3-8B-Instruct-q4f16_1-MLC",
-      {
-        gpuMemoryUtilization: 0.9,
-        modelConfig: { model_url: "https://huggingface.co/mlc-ai/Llama-3-8B-Instruct-q4f16_1-MLC/resolve/main/" }
-      }
-    );
-
-    setStatus("Готов", "#3ddc97");
-    sendBtn.disabled = false;
-  } 
-  catch (e) {
-    console.error(e);
-    setStatus("Ошибка загрузки", "#ff4f6b");
   }
 }
 
