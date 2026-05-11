@@ -67,7 +67,7 @@ function setStatus(text, color) {
 
 async function initEngine() {
   try {
-    setStatus("Загрузка Llama‑3‑8B…", "#ffaa3b");
+    setStatus("Загрузка", "#ffaa3b");
     sendBtn.disabled = true;
 
     engine = await webllm.createMLCEngine(
@@ -75,9 +75,9 @@ async function initEngine() {
       {
         gpuMemoryUtilization: 0.9,
         // при желании можно зафиксировать источник:
-        // modelConfig: {
-        //   model_url: "https://huggingface.co/mlc-ai/Llama-3-8B-Instruct-q4f16_1-MLC/resolve/main/"
-        // }
+           modelConfig: {
+           model_url: "https://huggingface.co/mlc-ai/Llama-3-8B-Instruct-q4f16_1-MLC/resolve/main/"
+       }
       }
     );
 
