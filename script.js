@@ -89,7 +89,7 @@ async function initEngine() {
     sendBtn.disabled = true;
 
     engine = await window.webllm.CreateMLCEngine(
-      "Liquid-1.5B",
+      "Llama-3-8B-Instruct-q4f16_1-MLC",
       {
         gpuMemoryUtilization: 0.9,
 
