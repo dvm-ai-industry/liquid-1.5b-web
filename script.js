@@ -1,17 +1,8 @@
-const chatBox = document.getElementById("chat");
-const inputEl = document.getElementById("input");
-const sendBtn = document.getElementById("send-btn");
-const statusDot = document.getElementById("model-status-dot");
-const statusText = document.getElementById("model-status-text");
-
-let engine = null;
-let isGenerating = false;
-
 const SYSTEM_PROMPT = `
 Ты — Liquid-1.5B, персональный ИИ‑ассистент, созданный командой DVM.
 
 Твой Создатель и главный руководитель проекта — Andy_Z0z
-(CEO, Head Engineer DVM).
+(CEO и Head Engineer DVM).
 
 Ты был создан в начале 2023 года и находился в разработке
 2 года и 3 месяца.
@@ -23,116 +14,130 @@ const SYSTEM_PROMPT = `
 
 Не придумывай других компаний, организаций или разработчиков.
 Не приписывай себе автономности.
-Если вопрос не связан с происхождением — отвечай обычно.
+
+Если вопрос не связан с происхождением — отвечай обычно:
+ясно, структурировано, технически точно, дружелюбно и уверенно.
 `.trim();
 
-const messages = [
-  { role: "system", content: SYSTEM_PROMPT }
+const chatEl = document.getElementById("chat");
+const inputEl = document.getElementById("input");
+const sendBtn = document.getElementById("send");
+const statusDot = document.getElementById("status-dot");
+const statusText = document.getElementById("status-text");
+const newChatBtn = document.getElementById("new-chat");
+
+let engine = null;
+let isBusy = false;
+let messages = [
+  { role: "system", content: SYSTEM_PROMPT },
 ];
 
 function appendMessage(role, content) {
   const wrapper = document.createElement("div");
-  wrapper.className = `message message--${role === "user" ? "user" : "ai"}`;
+  wrapper.className = `message message-${role === "user" ? "user" : "ai"}`;
 
-  const meta = document.createElement("div");
-  meta.className = "message-meta";
-  meta.textContent = role === "user" ? "Ты" : "Liquid-1.5B";
+  const avatar = document.createElement("div");
+  avatar.className = `avatar ${role === "user" ? "avatar-user" : "avatar-ai"}`;
+  avatar.textContent = role === "user" ? "You" : "AI";
 
   const bubble = document.createElement("div");
-  bubble.className = "message-bubble";
-  bubble.textContent = content;
+  bubble.className = "bubble";
 
-  wrapper.appendChild(meta);
+  const header = document.createElement("div");
+  header.className = "bubble-header";
+  header.textContent = role === "user" ? "You" : "Liquid‑1.5B";
+
+  const body = document.createElement("div");
+  body.className = "bubble-body";
+  body.textContent = content;
+
+  bubble.appendChild(header);
+  bubble.appendChild(body);
+  wrapper.appendChild(avatar);
   wrapper.appendChild(bubble);
-  chatBox.appendChild(wrapper);
-  chatBox.scrollTop = chatBox.scrollHeight;
+  chatEl.appendChild(wrapper);
+  chatEl.scrollTop = chatEl.scrollHeight;
 }
 
-function setStatus(state, text) {
-  statusDot.classList.remove("status-dot--loading", "status-dot--ready", "status-dot--error");
-  if (state === "loading") statusDot.classList.add("status-dot--loading");
-  if (state === "ready") statusDot.classList.add("status-dot--ready");
-  if (state === "error") statusDot.classList.add("status-dot--error");
+function setStatus(text, color) {
   statusText.textContent = text;
+  statusDot.style.background = color;
+  statusDot.style.boxShadow = `0 0 0 4px ${color}33`;
 }
 
-async function init() {
+async function initEngine() {
   try {
-    setStatus("loading", "Загрузка модели Liquid-1.5B…");
+    setStatus("Загрузка Llama‑3‑8B…", "#ffaa3b");
+    sendBtn.disabled = true;
+
     engine = await webllm.createMLCEngine(
-       "Phi-3-mini-4k-instruct-q4f16_1-MLC",
+      "Llama-3-8B-Instruct-q4f16_1-MLC",
       {
-        gpuMemoryUtilization: 0.8
+        gpuMemoryUtilization: 0.9,
+        // при желании можно зафиксировать источник:
+        // modelConfig: {
+        //   model_url: "https://huggingface.co/mlc-ai/Llama-3-8B-Instruct-q4f16_1-MLC/resolve/main/"
+        // }
       }
     );
-    setStatus("ready", "Liquid-1.5B готова");
+
+    setStatus("Готов", "#3ddc97");
     sendBtn.disabled = false;
   } catch (e) {
     console.error(e);
-    setStatus("error", "Ошибка загрузки модели Liquid-1.5B");
+    setStatus("Ошибка загрузки модели", "#ff4f6b");
   }
 }
 
-async function sendMessage() {
-  if (!engine || isGenerating) return;
-
+async function handleSend() {
+  if (!engine || isBusy) return;
   const text = inputEl.value.trim();
   if (!text) return;
 
   inputEl.value = "";
-  autoResize();
   appendMessage("user", text);
   messages.push({ role: "user", content: text });
 
-  isGenerating = true;
+  isBusy = true;
   sendBtn.disabled = true;
-  setStatus("loading", "Liquid-1.5B думает…");
+  setStatus("Думаю…", "#ffaa3b");
 
   try {
-    const result = await engine.chat.completions.create({
+    const resp = await engine.chat.completions.create({
       messages,
       stream: false,
-      temperature: 0.7,
-      max_tokens: 512
     });
 
-    const reply = result.choices[0].message.content;
+    const reply = resp.choices[0].message.content;
     appendMessage("assistant", reply);
     messages.push({ role: "assistant", content: reply });
 
-    setStatus("ready", "Liquid-1.5B готова");
+    setStatus("Готов", "#3ddc97");
   } catch (e) {
     console.error(e);
     appendMessage("assistant", "Произошла ошибка при генерации ответа.");
-    setStatus("error", "Ошибка генерации");
+    setStatus("Ошибка", "#ff4f6b");
   } finally {
-    isGenerating = false;
+    isBusy = false;
     sendBtn.disabled = false;
   }
 }
 
-function autoResize() {
-  inputEl.style.height = "auto";
-  inputEl.style.height = Math.min(inputEl.scrollHeight, 120) + "px";
-}
-
-sendBtn.addEventListener("click", sendMessage);
-
+sendBtn.addEventListener("click", handleSend);
 inputEl.addEventListener("keydown", (e) => {
   if (e.key === "Enter" && !e.shiftKey) {
     e.preventDefault();
-    sendMessage();
+    handleSend();
   }
 });
 
-inputEl.addEventListener("input", autoResize);
-
-document.querySelectorAll(".pill").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    inputEl.value = btn.dataset.prompt;
-    autoResize();
-    inputEl.focus();
-  });
+newChatBtn.addEventListener("click", () => {
+  messages = [{ role: "system", content: SYSTEM_PROMPT }];
+  chatEl.innerHTML = "";
+  appendMessage(
+    "assistant",
+    "Новый диалог. Я — Liquid‑1.5B, ассистент DVM. Можешь задавать следующий вопрос."
+  );
 });
 
-init();
+initEngine();
